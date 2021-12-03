@@ -1,6 +1,3 @@
-# Hackaton-orizaba
- Track Ecogreen
-
 # SIRIUS CHOICE
 
 _El sistema de elección inteligente para una logística 4.0 en tu empresa y todos sus centros de acopio._
