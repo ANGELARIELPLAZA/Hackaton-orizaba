@@ -1,39 +1,3 @@
-<?php header( "refresh:6" );
-	
-	session_start();
-	
-	if(!isset($_SESSION['id'])){
-		header("Location: index.php");
-	}
-	
-	$nombre = $_SESSION['nombre'];
-	$tipo_usuario = $_SESSION['tipo_usuario'];
-	
-
-$dbname = 'u582866828_dht11_php_mysq';
-$dbuser = 'u582866828_Angel';  
-$dbpass = 'Angelariel74'; 
-$dbhost = 'localhost'; 
-
-
-$connect = @mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
-
-if(!$connect){
-	echo "Error: " . mysqli_connect_error();
-	exit();
-}
-
-// echo "Connection Success!<br><br>";
-
-$temperature = $_GET["temperature"];
-$water_level = $_GET["water_level"];
-
-
-$query = "UPDATE temperature SET temperature = ('$temperature'),water_level = ('$water_level')";
-mysqli_query($connect,$query);
-
-// echo "Insertion Success!<br>";
-?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -78,48 +42,10 @@ mysqli_query($connect,$query);
                 <nav class="sb-sidenav accordion " id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <a class="nav-link" href="index.html"
-							><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Dashboard</a
-							>
+                            <a class="nav-link" href="index.html"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Dashboard</a>
 							
-							<?php if($tipo_usuario == 1) { ?>
 								
-								<div class="sb-sidenav-menu-heading">Interface</div>
-								<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts"
-								><div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-									UNIDADES
-									<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div
-									></a>
-									<div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-										<nav class="sb-sidenav-menu-nested nav"><a class="nav-link" href="layout-static.html">Static Navigation</a><a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a></nav>
-									</div>
-									<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages"
-									><div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-										RECOLECTORES
-										<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div
-										></a>
-										<div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
-											<nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-												<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth"
-												>Authentication
-													<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div
-													></a>
-													<div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
-														<nav class="sb-sidenav-menu-nested nav"><a class="nav-link" href="login.html">Login</a><a class="nav-link" href="register.html">Register</a><a class="nav-link" href="password.html">Forgot Password</a></nav>
-													</div>
-													<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError"
-													>Error
-														<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div
-														></a>
-														<div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
-															<nav class="sb-sidenav-menu-nested nav"><a class="nav-link" href="401.html">401 Page</a><a class="nav-link" href="404.html">404 Page</a><a class="nav-link" href="500.html">500 Page</a></nav>
-														</div>
-											</nav>
-										</div>
-										
-							<?php } ?>
-							
 							<div class="sb-sidenav-menu-heading">Addons</div>
 							<a class="nav-link" href="charts.html"
 							><div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
@@ -141,69 +67,9 @@ mysqli_query($connect,$query);
                     <div class="container-fluid">
                         <h1 class="mt-4">Dashboard Omnigreen</h1>
                         
-                        <div class="row">
-                            <div class="col-xl-3 col-md-6">
-                                <div class="border rounded bg-primary text-white mb-4">
-                                    <div class="card-body">CARTON</div>
-                                    <a class="card-body">  <?php
-    $query2 = "select * from dht11 where id= '1'";
-    $row = mysqli_query($connect,$query2);
-    
-    while($data = $row->fetch_assoc()){
-        if($data["temperature"] > 40){
-           echo "<h2 style='color:white'>". $data["temperature"]." KG</h2>"; 
-        }else if($data["temperature"] <= 40 && $data["temperature"] > 25){
-           echo "<h2 style='color:green'>". $data["temperature"]." KG</h2>";  
-        }else{
-            echo "<h2 style='color:black'>". $data["temperature"]." KG</h2>"; 
-        }
-        
-    }
-   
-?>  </a>
-                                   
-								</div>
-							</div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class=" bg-warning text-white mb-4">
-                                    <div class="card-body">MADERA</div>
-                                    <a class="card-body"><?php
-    $query2 = "select * from dht11 where id= '1'";
-    $row = mysqli_query($connect,$query2);
-    
-    while($data = $row->fetch_assoc()){
-        if($data["humidity"] > 40){
-           echo "<h2 style='color:white'>". $data["humidity"]." KG</h2>"; 
-        }else if($data["humidity"] <= 40 && $data["humidity"] > 25){
-           echo "<h2 style='color:green'>". $data["humidity"]." KG</h2>";  
-        }else{
-            echo "<h2 style='color:black'>". $data["humidity"]." KG</h2>"; 
-        }
-        
-    }
-   
-?></a>
-                                   
-								</div>
-							</div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class=" bg-danger text-white mb-4">
-                                        <div class="card-body">PET</div>
-                                        <a class="card-body"><?php 
-                                        $query3 = "SELECT water_level from dht11";
-    $rows = mysqli_query($connect,$query3);
-    
-    while($state = $rows->fetch_assoc()){
-        
-        if( strcmp($state['water_level'],"LLENO")  == 0){
-            echo "<h2 style='color:WHITE'>".$state['water_level'];
-        }else if( strcmp($state['water_level'],"LOW")  == 0 ){
-            echo "<h2 style='color:black'>".$state['water_level'];
-        }
-        echo "</h2>";
-    }?></a>
-                                     
-			
+                     
+                     
+                      
 				</main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid">
